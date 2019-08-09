@@ -255,6 +255,19 @@ class PluginFormcreatorUpgradeTo2_5 {
 
       // Convert the old relation in glpi_plugin_formcreator_formvalidators table
       if ($DB->tableExists('glpi_plugin_formcreator_formvalidators')) {
+         
+         $query = "CREATE TABLE IF NOT EXISTS `glpi_plugin_formcreator_forms_validators` (
+            `id`                          int(11) NOT NULL AUTO_INCREMENT,
+            `plugin_formcreator_forms_id` int(11) NOT NULL,
+            `itemtype`                    varchar(255) NOT NULL DEFAULT '',
+            `items_id`                    int(11) NOT NULL,
+            `uuid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            UNIQUE KEY `unicity` (`plugin_formcreator_forms_id`, `itemtype`, `items_id`)
+         )
+         ENGINE = InnoDB DEFAULT CHARACTER SET = utf8 COLLATE = utf8_unicode_ci;";
+         $DB->query($query) or plugin_formcrerator_upgrade_error($migration);
+         
          $table_form = PluginFormcreatorForm::getTable();
          $old_table = 'glpi_plugin_formcreator_formvalidators';
          $query = "INSERT INTO `glpi_plugin_formcreator_forms_validators` (`plugin_formcreator_forms_id`, `itemtype`, `items_id`)
