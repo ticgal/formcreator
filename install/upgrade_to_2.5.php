@@ -226,7 +226,7 @@ class PluginFormcreatorUpgradeTo2_5 {
       if (!$DB->fieldExists('glpi_plugin_formcreator_forms_profiles', 'id', false)) {
          $DB->query("ALTER TABLE 'glpi_plugin_formcreator_forms_profiles' DROP PRIMARY KEY");
          $migration->addField('glpi_plugin_formcreator_forms_profiles', 'id', 'autoincrement');
-         $migration->addKey('glpi_plugin_formcreator_forms_profiles', 'id', 'id', 'PRIMARY KEY');
+         $migration->addKey('glpi_plugin_formcreator_forms_profiles', 'id', 'PRIMARY KEY');
          $migration->addKey('glpi_plugin_formcreator_forms_profiles',
                            ['plugin_formcreator_forms_id', 'profiles_id'],
                            'unicity',
